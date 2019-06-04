@@ -1,0 +1,29 @@
+<root>
+    <node> 1
+        <pippo>
+            io sono pippo
+        </pippo>
+        <topolino>
+            "io sono topolino "
+        </topolino>
+    </node>
+    <node> 2
+        <pluto>
+            io sono pluto
+        </pluto>
+        <topolino>
+            "io sono topolino "
+        </topolino>
+    </node>
+    <node> 3
+        <pippo>
+            io sono pippo
+        </pippo>
+        <pluto>
+            io sono pluto
+        </pluto>
+        <topolino>
+            "io sono topolino "
+        </topolino>
+    </node>
+</root>

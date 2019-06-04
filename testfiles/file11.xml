@@ -1,0 +1,41 @@
+<root>
+    <node>
+        1
+        <pippo id="1">
+            io sono pippo
+        </pippo>
+        <topolino id="1">
+            "io sono topolino "
+        </topolino>
+    </node>
+    <node>
+        2
+        <pluto id="1">
+            io sono pluto
+        </pluto>
+        <topolino id="2">
+            "io sono topolino "
+        </topolino>
+    </node>
+    <node>
+        3
+        <pippo id="3">
+            io sono pippo
+        </pippo>
+        <pluto id="2">
+            io sono pluto
+        </pluto>
+        <topolino id="3">
+            "io sono topolino "
+        </topolino>
+    </node>
+    <node>
+        4
+        <pippo id="4">
+            io sono pippo array
+        </pippo>
+        <pippo>
+            io sono pippo array
+        </pippo>
+    </node>
+</root>

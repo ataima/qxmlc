@@ -1,0 +1,15 @@
+<base>
+  <node>
+	<wall>
+		<windows>
+			<door>
+				<river>
+					<city id="TORINO"/>
+					<city /> 	
+				</river>
+			</door>
+		</windows>		
+	</wall>
+  </node>
+</base>
+

@@ -1,0 +1,131 @@
+<egg>
+    <project>
+        <name>
+            glibc
+        </name>
+        <download>
+            check
+        </download>
+        <remote>
+            <method>
+                wget
+            </method>
+            <url>
+                http://ftp.gnu.org/gnu/glibc
+            </url>
+            <file>
+                glibc-2.25.tar.gz
+            </file>
+        </remote>
+        <build>
+            <step id="3">
+                <silent>
+                    yes
+                </silent>
+                <threads>
+                    8
+                </threads>
+                <path>
+                    <pre>
+                        <set id="0">
+                            $USER_PATH
+                        </set>
+                        <set id="1">
+                            $U_1_2_PATH
+                        </set>
+                        <add id="0">
+                            $DEPLOY/$CROSS/bin
+                        </add>
+                    </pre>
+                </path>
+                <configure>
+                    <pre id="1">
+                        <code id="0">
+                            mkdir -p $DEPLOY/$CROSS/lib
+                        </code>
+                    </pre>
+                    <pre id="2">
+                        <code id="0">
+                            mkdir -p $DEPLOY/$CROSS/include
+                        </code>
+                    </pre>
+                    <extra id="0">
+                        --prefix=$DEPLOY/$CROSS
+                    </extra>
+                    <extra id="1">
+                        --build=$NATIVE
+                    </extra>
+                    <extra id="2">
+                        --host=$CROSS
+                    </extra>
+                    <extra id="3">
+                        --target=$CROSS
+                    </extra>
+                    <extra id="4">
+                        --with-headers=$DEPLOY/$CROSS/include
+                    </extra>
+                    <extra id="5">
+                        --disable-multilib
+                    </extra>
+                    <extra id="6">
+                        libc_cv_forced_unwind=yes
+                    </extra>
+                    <extra id="7">
+                        libc_cv_c_cleanup=yes
+                    </extra>
+                    <extra id="8">
+                        libc_cv_ctors_header=yes
+                    </extra>
+                    <extra id="0">
+                        --prefix=$DEPLOY/$CROSS
+                    </extra>
+                    <extra id="1">
+                        --build=$NATIVE
+                    </extra>
+                    <extra id="2">
+                        --target=$CROSS
+                    </extra>
+                    <extra id="3">
+                        --host=$CROSS
+                    </extra>
+                    <extra id="4">
+                        --with-headers=$DEPLOY/$CROSS/include
+                    </extra>
+                    <extra id="5">
+                        --disable-multilib
+                    </extra>
+                    <extra id="6">
+                        libc_cv_forced_unwind=yes
+                    </extra>
+                </configure>
+                <make id="1">
+                    <priority>
+                        15
+                    </priority>
+                    <rule id="1">
+                        <name>
+                            install-bootstrap-headers=yes install-headers
+                        </name>
+                        <thread>
+                            1
+                        </thread>
+                        <name>
+                            csu/subdir_lib
+                        </name>
+                        <post id="2">
+                            <code id="0" >
+                                install $BUILD/csu/crt1.o $BUILD/csu/crti.o $BUILD/csu/crtn.o $DEPLOY/$CROSS/lib
+                            </code>
+                            <code id="1">
+                                $CROSS-gcc -nostdlib -nostartfiles -shared -x c /dev/null -o $DEPLOY/$CROSS/lib/libc.so
+                            </code>
+                            <code id="2">
+                                touch $DEPLOY/$CROSS/include/gnu/stubs.h
+                            </code>
+                        </post>
+                    </rule>
+                </make>
+            </step>
+        </build>
+    </project>
+</egg>

@@ -1,0 +1,71 @@
+<root>
+    <node1>
+        <pippo>
+            io sono pippo
+        </pippo>
+        <pluto>
+            io sono pluto
+        </pluto>
+        <topolino>
+            "io sono topolino "
+        </topolino>
+    </node1>
+    <node2>
+        <a1>
+            campo a1
+        </a1>
+        <a2>
+            campo a2
+        </a2>
+        <a3>
+            campo a3
+        </a3>
+        <a4>
+            campo a4
+        </a4>
+        <a5>
+            campo a5
+        </a5>
+        <a6>
+            campo a6
+        </a6>
+        <a7>
+            campo a7
+        </a7>
+        <a8>
+            campo a8
+        </a8>
+        <a9>
+            campo a9
+        </a9>
+    </node2>
+    <node3>
+        <b1>
+            campo b1
+        </b1>
+        <b2>
+            campo b2
+        </b2>
+        <b3>
+            campo b3
+        </b3>
+        <b4>
+            campo b4
+        </b4>
+        <b5>
+            campo b5
+        </b5>
+        <b6>
+            campo b6
+        </b6>
+        <b7>
+            campo b7
+        </b7>
+        <b8>
+            campo b8
+        </b8>
+        <b9>
+            campo b9
+        </b9>
+    </node3>
+</root>

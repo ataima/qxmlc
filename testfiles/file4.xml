@@ -1,0 +1,172 @@
+<root>
+    <node1> 1
+        <pippo>
+            io sono pippo
+        </pippo>
+        <pluto>
+            io sono pluto
+        </pluto>
+        <topolino>
+            "io sono topolino "
+        </topolino>
+    </node1>
+    <node2> 2
+        <a1>
+            campo a1
+        </a1>
+        <a2>
+            campo a2
+        </a2>
+        <a3>
+            campo a3
+        </a3>
+        <a4>
+            campo a4
+        </a4>
+        <a5>
+            campo a5
+        </a5>
+        <a6>
+            campo a6
+        </a6>
+        <a7>
+            campo a7
+        </a7>
+        <a8>
+            campo a8
+        </a8>
+        <a9>
+            campo a9
+        </a9>
+        <array>
+            array element 1
+        </array>
+        <array>
+            array element 2
+        </array>
+        <array>
+            array element 3
+        </array>
+        <array>
+            array element 4
+        </array>
+        <array>
+            array element 5
+        </array>
+    </node2>
+    <node3> 3
+        <b1>
+            campo b1
+        </b1>
+        <b2>
+            campo b2
+        </b2>
+        <b3>
+            campo b3
+        </b3>
+        <b4>
+            campo b4
+        </b4>
+        <b5>
+            campo b5
+        </b5>
+        <b6>
+            campo b6
+        </b6>
+        <b7>
+            campo b7
+        </b7>
+        <b8>
+            campo b8
+        </b8>
+        <b9>
+            campo b9
+        </b9>
+    </node3>
+    <simple1>
+        io sono simple1
+    </simple1>
+    <simple2>
+        io sono simple2
+    </simple2>
+    <simple3>
+        io sono simple3
+    </simple3>
+    <array>
+        array element 1
+    </array>
+    <array>
+        array element 2
+    </array>
+    <array>
+        array element 3
+    </array>
+    <array>
+        array element 4
+    </array>
+    <array>
+        array element 5
+    </array>
+    <array>
+        array element 6
+    </array>
+    <array>
+        array element 7
+    </array>
+    <array>
+        array element 8
+    </array>
+    <array>
+        array element 9
+    </array>
+    <array>
+        array element 10
+    </array>
+    <array>
+        array element 11
+    </array>
+    <step>1
+        <pippo>
+            io sono pippo 1
+        </pippo>
+        <pluto>
+            io sono pluto 2
+        </pluto>
+        <topolino>
+            "io sono topolino 3 "
+        </topolino>
+    </step>
+    <step>2
+        <pippo>
+            io sono pippo 4
+        </pippo>
+        <pluto>
+            io sono pluto 5
+        </pluto>
+        <topolino>
+            "io sono topolino 6 "
+        </topolino>
+    </step>
+    <step>3
+        <pippo>
+            io sono pippo 4
+        </pippo>
+        <pluto>
+            io sono pluto 5
+        </pluto>
+        <topolino>
+            "io sono topolino 6 "
+        </topolino>
+    </step>
+    <step>4
+        <pippo>
+            io sono pippo 5
+        </pippo>
+        <pluto>
+            io sono pluto 88
+        </pluto>
+        <topolino>
+            io sono topolino 99
+        </topolino>
+    </step>
+</root>
