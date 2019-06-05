@@ -34,7 +34,10 @@ So to use the C++ generate code to modify a xml You can Load a xml file with met
 
 3)it is also possible generate a output xml file with more info or debug  (--addxmlinfo or --debug ) 
 
-
+4) Alternative use of qxmlc. If you have to start with new project with require a file load or save of data
+   starting with the definition of schema of xml. Create a minimal xml as schema and use qxmlc to generate main class.
+   Derived Your code from this class. If in the future have to change xml schema have only to recreate via qxmlc
+   the code and all youtr developper code will be untouch of changes.
 
 VERSION  1.0 Beta 0
 
@@ -45,12 +48,16 @@ for any of TEST_FILES/testxx You can compile the generate code with Makefile ( m
 
 
 compiled with:
+
 gcc --version
 gcc (Ubuntu 8.1.0-5ubuntu1~16.04) 8.1.0
 Copyright (C) 2018 Free Software Foundation, Inc.
+
+
+Beta version 00 .
+
+
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-
-
-A.C
+@Angelo Coppi
