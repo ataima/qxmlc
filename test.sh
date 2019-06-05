@@ -1,11 +1,5 @@
 #!/bin/sh
 
-# FIRST BUILD ALL
-if [ "$#" -eq 0 ]
-then 
-	make clean all install
-fi
-
 
 EXEC=""
 ARGS="--verbose 7 --addtest --addxmlinfo --createxslt --debug --out_path "
