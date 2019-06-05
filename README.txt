@@ -37,11 +37,15 @@ So to use the C++ generate code to modify a xml You can Load a xml file with met
 4) Alternative use of qxmlc. If you have to start with new project with require a file load or save of data
    starting with the definition of schema of xml. Create a minimal xml as schema and use qxmlc to generate main class.
    Derived Your code from this class. If in the future have to change xml schema have only to recreate via qxmlc
-   the code and all youtr developper code will be untouch of changes.
+   the code and all your developper code will be untouch of changes.
 
 VERSION  1.0 Beta 0
 
-TO TRY do ./test.sh and watch the generated code into TEST_FILES/testxx
+TO TRY:
+cd ca_qxmlc
+./bootstrap 64
+cd ..
+do ./test.sh and watch the generated code into TEST_FILES/testxx
 
 
 for any of TEST_FILES/testxx You can compile the generate code with Makefile ( make all ) and run : test_qxmlc <filexx.xml> . Try to change the value of any node in the <filexx.xml> and retry to load the file. Add or remove nodes in accordance of <filexx.xml.xslt> and test_qxmlc to verifiry if continue to load the <filexx.xml>.
