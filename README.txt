@@ -1,4 +1,6 @@
-﻿ca_qxmlc is a c++ code generator to load  in transparent mode any file xml.
+﻿CA_QXMLC:
+
+ca_qxmlc is a c++ code generator to load  in transparent mode any file xml.
 
 With ca_qmlc You can :
 
@@ -49,6 +51,10 @@ do ./test.sh and watch the generated code into TEST_FILES/testxx
 
 
 for any of TEST_FILES/testxx You can compile the generate code with Makefile ( make all ) and run : test_qxmlc <filexx.xml> . Try to change the value of any node in the <filexx.xml> and retry to load the file. Add or remove nodes in accordance of <filexx.xml.xslt> and test_qxmlc to verifiry if continue to load the <filexx.xml>.
+
+
+CAXML:
+caxml is a simple tool to create/read/write xml nodes on a xml file.
 
 
 compiled with:
