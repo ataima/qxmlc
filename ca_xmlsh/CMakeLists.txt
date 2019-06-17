@@ -5,37 +5,30 @@ cmake_minimum_required (VERSION 2.8.11)
 
 
 
-project (ca_qxmlc)
+project (caxml)
+
 
 include_directories(./inc)
 
-
+include_directories(../ca_libxmlca/inc)
  
 #However, the file(GLOB...) allows for wildcard additions:
 file(GLOB SOURCES "./src/*.cpp")
 
-ADD_EXECUTABLE(ca_qxmlc ${SOURCES})
+ADD_EXECUTABLE(caxml ${SOURCES})
 
-install ( TARGETS ca_qxmlc DESTINATION ${CMAKE_INSTALL_PREFIX} )
+install ( TARGETS caxml DESTINATION ${CMAKE_INSTALL_PREFIX} )
 
 set(CMAKE_CXX_FLAGS "--std=c++14 ${CMAKE_CXX_FLAGS}")
 
 
-target_link_libraries (ca_qxmlc xmlca )
-target_link_libraries (ca_qxmlc ca_logger )
-target_link_libraries (ca_qxmlc pthread )
-
 
 add_custom_command (
-    TARGET ca_qxmlc
+    TARGET caxml
     PRE_BUILD
     COMMAND  ${CMAKE_CURRENT_SOURCE_DIR}/beauty.sh ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_custom_target( test_qxmlc
-    DEPENDS  ca_qxmlc
-    COMMAND  ${CMAKE_INSTALL_PREFIX}/ca_qxmlc $1 
-    WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}
-    COMMENT "run qxmlc test "
-)
+target_link_libraries (caxml xmlca )
+
 

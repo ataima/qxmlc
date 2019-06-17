@@ -1,13 +1,13 @@
-<root> 
-    <node1 id="1" priority="5" >
-        <pippo>
-            io sono pippo
-        </pippo>
-        <pluto>
-            io sono pluto
-        </pluto>
-        <topolino>
-            "io sono topolino "
-        </topolino>
-    </node1>
+<root>
+<node1 id="1"  priority="5" >
+<pippo>
+io sono pippo        
+</pippo>
+<pluto>
+io sono pluto        
+</pluto>
+<topolino>
+"io sono topolino "        
+</topolino>
+</node1>
 </root>

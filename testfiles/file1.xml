@@ -1,5 +1,11 @@
-<root>
-	<pippo> io sono pippo </pippo>
-	<pluto> io sono pluto </pluto>
-	<topolino> "io sono topolino      "</topolino>
+<root> root value
+<pippo>
+io sono pippo
+</pippo>
+<pluto>
+io sono pluto
+</pluto>
+<topolino>
+"io sono topolino      "
+</topolino>
 </root>

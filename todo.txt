@@ -1,0 +1,8 @@
+*) toString inserire formattazione tab nodo + commento
+0) ERRORE : risolvere problema che attacca opzioni di nodo -> da lista  a map verificare su file grandi ?
+1) inserire fullname in IXmlNode , viene usato spesso e richiede troppo codice per ricostruirlo ogni volta FATTO
+2) trasformae il processo selezione del modello nella generazine dello XSLT del file
+3) se si riesce a fare lo XSLT allora il compilatore in caso si passi in input lo XSLT non se lo auto crea ma prende il modello di input. In questo modo introdurre delee regole es min max etc
+28/05/2019
+1) un inode_array_xxx prende come modello il primo item trovato ma deve promupovere a modello l'item che ha il numero massimo di figli.  FATTO
+2) al momento lo schema è rigido : un inode_array_xxx puo avere un figlio 'pippo' di tipo inode_simple il successivo node un figlio pippo con opzione il successivo node un figlio pippo di tipo array . Per rendere più flessibile la generazione su xml vari, bisogna promuovere il tipo del nodo 'pippo' nel caso precedente a inode_array  con campi vuoti e avere tutti i pippo dello stesso tipo.Al momento qxmlc si accorge della differenza e da un'eccezione come ègiusto che sia. FATTO

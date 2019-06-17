@@ -14,28 +14,24 @@ include_directories(./inc)
 #However, the file(GLOB...) allows for wildcard additions:
 file(GLOB SOURCES "./src/*.cpp")
 
-ADD_EXECUTABLE(ca_qxmlc ${SOURCES})
+ADD_EXECUTABLE(ca_packfile ${SOURCES})
 
-install ( TARGETS ca_qxmlc DESTINATION ${CMAKE_INSTALL_PREFIX} )
+install ( TARGETS ca_packfile DESTINATION ${CMAKE_INSTALL_PREFIX} )
 
 set(CMAKE_CXX_FLAGS "--std=c++14 ${CMAKE_CXX_FLAGS}")
 
 
-target_link_libraries (ca_qxmlc xmlca )
-target_link_libraries (ca_qxmlc ca_logger )
-target_link_libraries (ca_qxmlc pthread )
-
 
 add_custom_command (
-    TARGET ca_qxmlc
+    TARGET ca_packfile
     PRE_BUILD
     COMMAND  ${CMAKE_CURRENT_SOURCE_DIR}/beauty.sh ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_custom_target( test_qxmlc
-    DEPENDS  ca_qxmlc
-    COMMAND  ${CMAKE_INSTALL_PREFIX}/ca_qxmlc $1 
+add_custom_target( pack_files
+    DEPENDS  ca_packfile
+    COMMAND  ${CMAKE_INSTALL_PREFIX}/ca_packfile  --out ca_libxmlca/src/capackedfiles.cpp ca_libxmlca/src/caminiXml.cpp ca_libxmlca/inc/caminiXml.h 
     WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}
-    COMMENT "run qxmlc test "
+    COMMENT "run packfile on minixml "
 )
 
