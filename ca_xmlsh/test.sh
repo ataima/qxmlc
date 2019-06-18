@@ -260,4 +260,17 @@ kotest "--get" "( root.mario?@value )" file1.xml
 oktest "--get" "( root ? @childs )" file1.xml
 oktest "--get" "( root ? @childs# )" file1.xml
 
+rm -rf  $OUTPATH/file1.xml
+
+oktest "--create" "root" file1.xml
+oktest "--set" "(root =@value('value') && . =@attrib(i1,1) && . =@attrib(name,mario) && . +@childs(node1) && . +@childs(node2) && . +@childs(node3))" file1.xml
+cat $OUTPATH/file1.xml
+
+kotest "--set"  "(root.node1 =@value('value1') && root.node2 =@value( value2 ))" file1.xml
+cat $OUTPATH/file1.xml
+
+
+rm -rf $OUTPATH/file1.xml
+
+
 report
