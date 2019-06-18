@@ -54,8 +54,8 @@ for any of TEST_FILES/testxx You can compile the generate code with Makefile ( m
 
 
 CAXML:
-caxml is a simple tool to create/read/write xml nodes on a xml file.
-
+caxml is a  tool to create/read/write xml nodes on a xml file.
+see --help for more info
 
 compiled with:
 

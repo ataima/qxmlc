@@ -92,15 +92,20 @@ static void Help_get(CA::IOptionArgvManager *)
     std::cout<<YELLOW<<"--get \"( root.node1.node2 ? @childs#)\""<<std::endl;
     std::cout<<REPLACE<<"\treturn the number of childs node of root.node1.node2"<<std::endl;
     std::cout<<YELLOW<<"--get \"(egg.conf ? @childs(editor) && .editor ? @value=='scite')\""<<std::endl;
-    std::cout<<REPLACE<<"\tcheck if exist node editpor on node egg.conf and also \n";
+    std::cout<<REPLACE<<"\tcheck if exist node editor on node egg.conf and also \n";
     std::cout<<REPLACE<<"\tcheck if the value of egg.conf.editor is scite"<<std::endl;
     std::cout<<GREEN_LIGHT<<"with && operator can execute more tests . ex:  "<<REPLACE<<std::endl;
     std::cout<<REPLACE<<"\t--get \"( root.node1.node2 ? @value==apple && . ? @attrib(price)==100 )"<<std::endl;
     std::cout<<REPLACE<<"\tfind node root.node1.node2 if value is apple, check the same node (.)\n"<<
              "\tand test if attrib price is 100, so print the bool result"<<std::endl;
-    std::cout<<GREEN_LIGHT<<"for change array nodes can use [nn] access ex." <<REPLACE<<std::endl;
+    std::cout<<GREEN_LIGHT<<"for navigate on array nodes can use [nn] access ex." <<REPLACE<<std::endl;
     std::cout<<REPLACE<<"\t--get \"( root.node1[12].node2 ? @value==apple )\n"<<std::endl;
     std::cout<<REPLACE<<"\tcheck the value of 12^ node (node1)  of root (root) \n"<<std::endl;
+    std::cout<<GREEN_LIGHT<<"tips:'.' is the same node of previous search "<<REPLACE<<std::endl;
+    std::cout<<GREEN_LIGHT<<"tips:'..' is the parent node of the node of the previous search "<<REPLACE<<std::endl;
+    std::cout<<GREEN_LIGHT<<"tips:'/' the search restart from main root node "<<REPLACE<<std::endl;
+    std::cout<<GREEN_LIGHT<<"ex: ( root.node1 xxxx && . xxxx && .. xxxx && /root xxxx"<<REPLACE<<std::endl;
+    std::cout<<GREEN_LIGHT<<"ex:  start at root.node1 -> remain on node1 -> return to root-> remain to root"<<REPLACE<<std::endl;
     exit(0);
 }
 
@@ -122,6 +127,13 @@ static void Help_set(CA::IOptionArgvManager *)
     std::cout<<REPLACE<<"\tadd the new node nodeA to  root.node1.node2 && set to the  same node (.)\n"<<
              "\tthe attribute test to value 100"<<std::endl;
     std::cout<<GREEN_LIGHT<<"add more node of same name create a array of node" <<REPLACE<<std::endl;
+    std::cout<<GREEN_LIGHT<<"tips:'.' is the same node of previous search "<<REPLACE<<std::endl;
+    std::cout<<GREEN_LIGHT<<"tips:'..' is the parent node of the node of the previous search "<<REPLACE<<std::endl;
+    std::cout<<GREEN_LIGHT<<"tips:'/' the search restart from main root node "<<REPLACE<<std::endl;
+    std::cout<<GREEN_LIGHT<<"ex: ( root.node1 xxxx && . xxxx && .. xxxx && /root xxxx"<<REPLACE<<std::endl;
+    std::cout<<GREEN_LIGHT<<"ex:  start at root.node1 -> remain on node1 -> return to root-> remain to root"<<REPLACE<<std::endl;
+
+
     exit(0);
 }
 
