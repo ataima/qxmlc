@@ -660,7 +660,7 @@ void  LCFXml::toString(std::iostream &out,IKeyValue *obj,std::string & parent)
             if(!it.D.S.simple->empty())
             {
                 ss << parent << "<" << it.name << ">" << *(it.D.S.simple) <<
-                   std::endl << parent << "</" << it.name << ">" << std::endl;
+                   "</" << it.name << ">" << std::endl;
             }
             else
             {
@@ -673,7 +673,7 @@ void  LCFXml::toString(std::iostream &out,IKeyValue *obj,std::string & parent)
             if(!it.D.O.simple->empty())
             {
                 ss << ">" << *(it.D.O.simple) <<
-                   std::endl << parent << "</" << it.name << ">" << std::endl;
+                   "</" << it.name << ">" << std::endl;
             }
             else
             {
@@ -703,7 +703,7 @@ void  LCFXml::toString(std::iostream &out,IKeyValue *obj,std::string & parent)
                 if(!uit.empty())
                 {
                     ss << parent << "<" << it.name << ">" << uit <<
-                       std::endl << parent << "</" << it.name << ">" << std::endl;
+                       "</" << it.name << ">" << std::endl;
                 }
                 else
                 {
