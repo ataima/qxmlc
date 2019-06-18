@@ -268,8 +268,11 @@ cat $OUTPATH/file1.xml
 
 kotest "--set"  "(root.node1 =@value('value1') && root.node2 =@value( value2 ))" file1.xml
 cat $OUTPATH/file1.xml
-#todo fix 
 oktest "--set"  "(root.node1=@value('value1') && .=@attrib(id,2))" file1.xml
+kotest "--get"  "(root.node1 @value  && . @attrib)  " file1.xml
+oktest "--get"  " ( root.node1 ? @value  && . ? @attrib(*) ) " file1.xml
+
+
 #todo add fix : .. return at parent of node 
 oktest "--set"  "(root.node1 =@value('value1') && ..node2 =@value( value2 ))" file1.xml
 #todo add fix : / return to root min node
@@ -278,4 +281,9 @@ oktest "--set"  "(root.node1=@value('value1') && /root.node2=@value( value2 ))" 
 rm -rf $OUTPATH/file1.xml
 
 
-report
+oktest "--create" "root" file1.xml
+kotest "--set" "(root =@value('value') && . =@attrib(i1,1) && . =@attrib(name,mario) && . +@childs(node1) && . +@childs(node2) && . +@childs(node3)) && /root.node1=@vale(prova1) && .=@attrib(mode,test1) && .=@attrib(type,22) && /root.node2=@vale(picopo) && .=@attrib(mode,trillo) && .=@attrib(type,casa) && root.node3=@vale(popo) && .=@attrib(mode,trick) && .=@attrib(type,brick))" file1.xml
+kotest "--set" "(root =@value('value') && . =@attrib(i1,1) && . =@attrib(name,mario) && . +@childs(node1) && . +@childs(node2) && . +@childs(node3) && /root.node1=@vale(prova1) && .=@attrib(mode,test1) && .=@attrib(type,22) && /root.node2=@vale(picopo) && .=@attrib(mode,trillo) && .=@attrib(type,casa) && root.node3=@vale(popo) && .=@attrib(mode,trick) && .=@attrib(type,brick))" file1.xml
+kotest "--set" "(root =@value('value') && . =@attrib(i1,1) && . =@attrib(name,mario) && . +@childs(node1) && . +@childs(node2) && . +@childs(node3) && /root.node1=@value(prova1) && .=@attrib(mode,test1) && .=@attrib(type,22) && /root.node2=@value(picopo) && .=@attrib(mode,trillo) && .=@attrib(type,casa) && root.node3=@value(popo) && .=@attrib(mode,trick) && .=@attrib(type,brick))" file1.xml
+oktest "--set" "(root =@value('value') && . =@attrib(i1,1) && . =@attrib(name,mario) && . +@childs(node1) && . +@childs(node2) && . +@childs(node3) && /root.node1=@value(prova1) && .=@attrib(mode,test1) && .=@attrib(type,22) && /root.node2=@value(picopo) && .=@attrib(mode,trillo) && .=@attrib(type,casa) && /root.node3=@value(popo) && .=@attrib(mode,trick) && .=@attrib(type,brick))" file1.xml
+report 

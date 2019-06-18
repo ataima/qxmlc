@@ -161,6 +161,8 @@ typedef enum tag_token_type
     t_notype,
     t_end,              // isspace to terminate nodepath or expr
     t_dot,              // .
+    t_ddot,             // ..
+    t_root,             // /
     t_left,             // (
     t_right,            // )
     t_left_square,      // [
@@ -222,26 +224,120 @@ static void throw_error(const char *msg,size_t pos, std::string & expr)
 
 
 
-static void tokenize_get(std::string & expr,tokenList &result)
+#define MODESET 1
+#define MODEGET 0
+static void tokenize(std::string & expr,tokenList &result, int mode )
 {
     result.clear();
     std::string::size_type  pos=0;
     std::string tmp;
+    int counter_lr=0;
     token t;
     char c;
+    do
+    {
+        c=expr.at(pos);
+        pos++;
+    }
+    while(::isspace(c));
+    pos--;
     while(pos < expr.size())
     {
         tmp.clear();
         t.ident.clear();
         t.type=t_notype;
         c=expr.at(pos);
-        if(c=='#')
+        if(mode==MODESET)
         {
-            t.type=t_len;
-            t.pos=pos;
-            result.push_back(t);
-            pos++;
-            continue;
+            if(c=='-')
+            {
+                t.type=t_del;
+                t.pos=pos;
+                result.push_back(t);
+                pos++;
+                continue;
+            }
+            if(c=='+')
+            {
+                t.type=t_add;
+                t.pos=pos;
+                result.push_back(t);
+                pos++;
+                continue;
+            }
+            if(c=='=')
+            {
+                t.type = t_assign;
+                t.pos=pos-1;
+                result.push_back(t);
+                pos++;
+                continue;
+            }
+        }
+        if(mode==MODEGET)
+        {
+            if(c=='#')
+            {
+                t.type=t_len;
+                t.pos=pos;
+                result.push_back(t);
+                pos++;
+                continue;
+            }
+            if(c=='?')
+            {
+                t.type=t_test;
+                t.pos=pos;
+                result.push_back(t);
+                pos++;
+                continue;
+            }
+            if(c=='=')
+            {
+                pos++;
+                c=expr.at(pos);
+                if(c=='=')
+                {
+                    t.type = t_eq;
+                    t.pos=pos-1;
+                    result.push_back(t);
+                    pos++;
+                    continue;
+                }
+                else
+                {
+                    std::stringstream ss;
+                    ss<<pos<<" : Invalid expr == : missing =" ;
+                    throw std::runtime_error(ss.str().c_str());
+                }
+            }
+            if(c=='!')
+            {
+                pos++;
+                c=expr.at(pos);
+                if(c=='=')
+                {
+                    t.type = t_noteq;
+                    t.pos=pos-1;
+                    result.push_back(t);
+                    pos++;
+                    continue;
+                }
+                else
+                {
+                    std::stringstream ss;
+                    ss<<pos<<" : Invalid expr == : missing =" ;
+                    throw std::runtime_error(ss.str().c_str());
+                }
+            }
+            if(c=='*')
+            {
+                t.type=t_any;
+                t.pos=pos;
+                result.push_back(t);
+                pos++;
+                continue;
+            }
         }
         if(c=='.')
         {
@@ -249,14 +345,29 @@ static void tokenize_get(std::string & expr,tokenList &result)
             t.pos=pos;
             result.push_back(t);
             pos++;
+            c=expr.at(pos);
+            if(c=='.')
+            {
+                t.type=t_ddot;
+                t.pos=pos;
+                pos++;
+                result.pop_back();
+                result.push_back(t);
+                c=expr.at(pos);
+                if(c=='.')
+                {
+                    throw_error("Syntax error , select . or .. ",pos,expr);
+                }
+            }
             continue;
         }
-        if(c=='?')
+        if(c=='/')
         {
-            t.type=t_test;
+            t.type=t_root;
             t.pos=pos;
             result.push_back(t);
             pos++;
+            counter_lr++;
             continue;
         }
         if(c=='(')
@@ -265,6 +376,7 @@ static void tokenize_get(std::string & expr,tokenList &result)
             t.pos=pos;
             result.push_back(t);
             pos++;
+            counter_lr++;
             continue;
         }
         if(c=='[')
@@ -281,27 +393,12 @@ static void tokenize_get(std::string & expr,tokenList &result)
             t.pos=pos;
             result.push_back(t);
             pos++;
+            counter_lr--;
+            if(counter_lr==0)
+                break;
             continue;
         }
-        if(c=='=')
-        {
-            pos++;
-            c=expr.at(pos);
-            if(c=='=')
-            {
-                t.type = t_eq;
-                t.pos=pos-1;
-                result.push_back(t);
-                pos++;
-                continue;
-            }
-            else
-            {
-                std::stringstream ss;
-                ss<<pos<<" : Invalid expr == : missing =" ;
-                throw std::runtime_error(ss.str().c_str());
-            }
-        }
+
         if(c=='&')
         {
             pos++;
@@ -321,40 +418,20 @@ static void tokenize_get(std::string & expr,tokenList &result)
                 throw std::runtime_error(ss.str().c_str());
             }
         }
-        if(c=='!')
+        if(c==']')
         {
-            pos++;
-            c=expr.at(pos);
-            if(c=='=')
+            if(result.back().type==t_number)
             {
-                t.type = t_noteq;
-                t.pos=pos-1;
+                t.type = t_right_square;
+                t.pos = pos;
                 result.push_back(t);
                 pos++;
                 continue;
             }
             else
             {
-                std::stringstream ss;
-                ss<<pos<<" : Invalid expr == : missing =" ;
-                throw std::runtime_error(ss.str().c_str());
+                throw_error("Insert ] after a number",pos,expr);
             }
-        }
-        if(c==']')
-        {
-            t.type=t_right_square;
-            t.pos=pos;
-            result.push_back(t);
-            pos++;
-            continue;
-        }
-        if(c=='*')
-        {
-            t.type=t_any;
-            t.pos=pos;
-            result.push_back(t);
-            pos++;
-            continue;
         }
         if(c==',')
         {
@@ -452,203 +529,15 @@ static void tokenize_get(std::string & expr,tokenList &result)
             throw_error("Syntax error ",pos,expr);
         }
     }
-}
-
-
-static void tokenize_set(std::string & expr,tokenList &result)
-{
-    result.clear();
-    std::string::size_type  pos=0;
-    std::string tmp;
-    token t;
-    char c;
     while(pos < expr.size())
     {
-        tmp.clear();
-        t.ident.clear();
-        t.type=t_notype;
         c=expr.at(pos);
-        if(c=='-')
-        {
-            t.type=t_del;
-            t.pos=pos;
-            result.push_back(t);
-            pos++;
-            continue;
-        }
-        if(c=='+')
-        {
-            t.type=t_add;
-            t.pos=pos;
-            result.push_back(t);
-            pos++;
-            continue;
-        }
-        if(c=='.')
-        {
-            t.type=t_dot;
-            t.pos=pos;
-            result.push_back(t);
-            pos++;
-            continue;
-        }
-        if(c=='(')
-        {
-            t.type=t_left;
-            t.pos=pos;
-            result.push_back(t);
-            pos++;
-            continue;
-        }
-        if(c=='[')
-        {
-            t.type=t_left_square;
-            t.pos=pos;
-            result.push_back(t);
-            pos++;
-            continue;
-        }
-        if(c==')')
-        {
-            t.type=t_right;
-            t.pos=pos;
-            result.push_back(t);
-            pos++;
-            continue;
-        }
-        if(c=='=')
-        {
-            t.type = t_assign;
-            t.pos=pos-1;
-            result.push_back(t);
-            pos++;
-            continue;
-        }
-        if(c=='&')
-        {
-            pos++;
-            c=expr.at(pos);
-            if(c=='&')
-            {
-                t.type = t_and;
-                t.pos=pos-1;
-                result.push_back(t);
-                pos++;
-                continue;
-            }
-            else
-            {
-                std::stringstream ss;
-                ss<<pos<<" : Invalid expr && : missing &" ;
-                throw std::runtime_error(ss.str().c_str());
-            }
-        }
-        if(c==',')
-        {
-            t.type = t_comma;
-            t.pos=pos-1;
-            result.push_back(t);
-            pos++;
-            continue;
-        }
-        if(c==']')
-        {
-            t.type=t_right_square;
-            t.pos=pos;
-            result.push_back(t);
-            pos++;
-            continue;
-        }
-        if(c=='\'' )
-        {
-            std::string::size_type  tpos=pos;
-            pos++;
-            if(pos==expr.size())break;
-            c=expr.at(pos);
-            do
-            {
-                tmp+=c;
-                pos++;
-                if(pos==expr.size())break;
-                c=expr.at(pos);
-            }
-            while(c!='\'');
-            if(c!='\'')
-            {
-                throw_error("Missing '",tpos,expr);
-            }
-            t.type=t_ident;
-            t.pos=tpos;
-            t.ident=tmp;
-            result.push_back(t);
-            pos++;
-            continue;
-        }
-        if(result.back().type==t_left_square && ::isdigit(c))
-        {
-            std::string::size_type  tpos=pos;
-            do
-            {
-                tmp+=c;
-                pos++;
-                if(pos==expr.size())break;
-                c=expr.at(pos);
-            }
-            while(::isdigit(c));
-            t.type=t_number;
-            t.pos=tpos;
-            t.ident=tmp;
-            result.push_back(t);
-            continue;
-        }
-        if(::isalnum(c) || c=='_' || c=='-' || c=='@')
-        {
-            std::string::size_type  tpos=pos;
-            do
-            {
-                tmp+=c;
-                pos++;
-                if(pos==expr.size())break;
-                c=expr.at(pos);
-            }
-            while(::isalnum(c) || c=='_' || c=='-' || c=='@' );
-            if(tmp.at(0)=='@')
-            {
-                if(tmp=="@value")t.type = t_key_value;
-                else if(tmp=="@attrib")t.type = t_key_attrib;
-                else if(tmp=="@childs")t.type = t_key_childs;
-                else
-                {
-                    std::stringstream ss;
-                    ss<<pos<<"Invalid expr keyword :" << tmp;
-                    throw std::runtime_error(ss.str().c_str());
-                }
-            }
-            else
-            {
-                t.type = t_ident;
-                t.ident = tmp;
-            }
-            t.pos=tpos;
-            result.push_back(t);
-            continue;
-        }
-        // if here must be a space
-        if(::isspace(c))
-        {
-            t.type=t_end;
-            t.pos=pos;
-            result.push_back(t);
-            pos++;
-            continue;
-        }
-        else
-        {
-            throw_error("Syntax error ",pos,expr);
-        }
+        pos++;
+        if(::isspace(c))continue;
+        throw_error("Syntax Error, chars after expression closure",pos,expr);
     }
-
 }
+
 
 static void trim(std::string & src, std::string &dst)
 {
@@ -812,7 +701,33 @@ static CA::IXmlNode *navigateXml(CA::IXmlNode *tmp,
                 throw_error("Syntax Error after '.'",t.pos,expr);
             }
         }
-        else if (t.type == t_end || t.type==t_right || t.type==t_test)
+        else if(t.type==t_ddot)
+        {
+            if(tmp->getParent()!=nullptr)
+                tmp=tmp->getParent();
+            next_token(it, stop,expr);
+            t = *it;
+            if (t.type == t_ident)
+                return navigateXml(tmp, t.ident,res, it, stop,expr);
+            else
+            {
+                throw_error("Syntax Error after '..'",t.pos,expr);
+            }
+        }
+        else if(t.type==t_root)
+        {
+            while(tmp->getParent()!=nullptr)tmp=tmp->getParent();
+            next_token(it, stop,expr);
+            t = *it;
+            if (t.type == t_ident)
+                return navigateXml(tmp, t.ident,res, it, stop,expr);
+            else
+            {
+                throw_error("Syntax Error after '/'",t.pos,expr);
+            }
+        }
+        else if ( t.type == t_end   || t.type==t_assign ||
+                  t.type==t_add     || t.type==t_del    ||  t.type==t_test)
         {
             return tmp;
         }
@@ -869,6 +784,22 @@ static CA::IXmlNode *navigateXml(CA::IXmlNode *tmp,
                             res.push_back(tmp);
                             return tmp;
                         }
+                        else if (t.type == t_ddot)
+                        {
+                            throw_error("Cannot switch to parent node is an array",t.pos,expr);
+                        }
+                        else if(t.type == t_root )
+                        {
+                            while(tmp->getParent()!=nullptr)tmp=tmp->getParent();
+                            next_token(it, stop,expr);
+                            t = *it;
+                            if (t.type == t_ident)
+                                return navigateXml(tmp, t.ident,res, it, stop,expr);
+                            else
+                            {
+                                throw_error("Syntax Error after '/'",t.pos,expr);
+                            }
+                        }
                         else
                         {
                             throw_error("Syntax Error ",t.pos,expr);
@@ -892,6 +823,31 @@ static CA::IXmlNode *navigateXml(CA::IXmlNode *tmp,
             if(t.type!=t_end)
             {
                 throw_error("Missing separator or [ or ]",t.pos,expr);
+            }
+            else if(t.type==t_ddot)
+            {
+                if(tmp->getParent()!=nullptr)
+                    tmp=tmp->getParent();
+                next_token(it, stop,expr);
+                t = *it;
+                if (t.type == t_ident)
+                    return navigateXml(tmp, t.ident,res, it, stop,expr);
+                else
+                {
+                    throw_error("Syntax Error after '..'",t.pos,expr);
+                }
+            }
+            else if(t.type==t_root)
+            {
+                while(tmp->getParent()!=nullptr)tmp=tmp->getParent();
+                next_token(it, stop,expr);
+                t = *it;
+                if (t.type == t_ident)
+                    return navigateXml(tmp, t.ident,res, it, stop,expr);
+                else
+                {
+                    throw_error("Syntax Error after '/'",t.pos,expr);
+                }
             }
             else
             {
@@ -938,7 +894,7 @@ static CA::IXmlNode * findNode(CA::IXmlNode *tmp,CA::xmlnodeList & res,
         }
         else if(t.type==t_any)
         {
-            // --expr * all node childs of node input
+            //  * all node childs of node input
             next_token(it,stop,expr);
             t=*it;
             if(t.type==t_end)
@@ -959,6 +915,44 @@ static CA::IXmlNode * findNode(CA::IXmlNode *tmp,CA::xmlnodeList & res,
         else if(t.type==t_dot)
         {
             // . this node
+            res.clear();
+            res.push_back(tmp);
+            auto tit=it;
+            next_token(it,stop,expr,true);
+            if(it->type==t_ident)
+            {
+                continue;
+            }
+            else
+            {
+                it=tit;
+                break;
+            }
+        }
+        else if(t.type==t_ddot)
+        {
+            // .. parent node
+            if(tmp->getParent()!=nullptr)
+                tmp=tmp->getParent();
+            res.clear();
+            res.push_back(tmp);
+            auto tit=it;
+            next_token(it,stop,expr,true);
+            if(it->type==t_ident)
+            {
+                continue;
+            }
+            else
+            {
+                it=tit;
+                break;
+            }
+        }
+        else if(t.type==t_root)
+        {
+            // .. parent node
+            while(tmp->getParent()!=nullptr)
+                tmp=tmp->getParent();
             res.clear();
             res.push_back(tmp);
             auto tit=it;
@@ -1091,16 +1085,23 @@ static bool  eval_test_get_by_attribute(CA::IXmlNode *tmp,
     }
     next_token(it,stop,expr,true);
     t=*it;
-    if(t.type!=t_ident)
+    if(t.type==t_ident)
     {
-        throw_error("Missing  attribute name",t.pos,expr);
+        attribute_name=t.ident;
     }
-    attribute_name=t.ident;
+    else if(t.type==t_any)
+    {
+        attribute_name="";
+    }
+    else
+    {
+        throw_error("Missing indent or * to find attribute",t.pos,expr);
+    }
     next_token(it,stop,expr,true);
     t=*it;
     if(t.type!=t_right)
     {
-        throw_error("Missing ( after attribute",t.pos,expr);
+        throw_error("Missing ) after attribute",t.pos,expr);
     }
     t_type aux=t_notype;
     next_token(it,stop,expr,true);
@@ -1162,11 +1163,23 @@ static bool  eval_test_get_by_attribute(CA::IXmlNode *tmp,
         CA::optionsList & attrList=tmp->getOptions();
         if(!attrList.empty())
         {
-            auto lit=attrList.find(attribute_name);
-            if(lit!=attrList.end())
+            if(attribute_name.empty())
             {
-                op_res=!lit->second.empty();
-                std::cout << lit->second.size() << std::endl;
+                op_res=false;
+                for (auto & nn : attrList)
+                {
+                    std::cout << nn.second.size() << std::endl;
+                    op_res |= !nn.second.empty();
+                }
+            }
+            else
+            {
+                auto lit = attrList.find(attribute_name);
+                if (lit != attrList.end())
+                {
+                    op_res = !lit->second.empty();
+                    std::cout << lit->second.size() << std::endl;
+                }
             }
         }
     }
@@ -1176,10 +1189,22 @@ static bool  eval_test_get_by_attribute(CA::IXmlNode *tmp,
         CA::optionsList & attrList=tmp->getOptions();
         if(!attrList.empty())
         {
-            auto lit=attrList.find(attribute_name);
-            if(lit!=attrList.end())
+            if(attribute_name.empty())
             {
-                std::cout << lit->second<< std::endl;
+                for (auto & nn : attrList)
+                {
+                    op_res=true;
+                    std::cout << nn.second << std::endl;
+                }
+            }
+            else
+            {
+                auto lit = attrList.find(attribute_name);
+                if (lit != attrList.end())
+                {
+                    op_res=true;
+                    std::cout << lit->second << std::endl;
+                }
             }
         }
     }
@@ -1688,12 +1713,15 @@ static bool  recur_expr_eval_set(CA::IXmlNode *tmp, tokenList::iterator &it,
     return false;
 }
 
+
+
+
 static int  eval_expr_get(CA::IXmlNode * node, std::string & expr)
 {
     int res=0;
     CA::IXmlNode *tmp=node;
     tokenList result;
-    tokenize_get(expr,result);
+    tokenize(expr,result,MODEGET);
     auto it=result.begin();
     auto stop=result.end();
     if(result.begin()->type!=t_left)
@@ -1735,8 +1763,9 @@ static int  eval_expr_set(CA::IXmlNode * node, std::string & expr)
     int res=0;
     CA::IXmlNode *tmp=node;
     tokenList result;
-    tokenize_set(expr,result);
+    tokenize(expr,result,MODESET);
     auto it=result.begin();
+    auto rit=result.rbegin();
     auto stop=result.end();
     if(result.begin()->type!=t_left)
     {
