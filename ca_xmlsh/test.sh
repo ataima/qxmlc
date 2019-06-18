@@ -268,7 +268,12 @@ cat $OUTPATH/file1.xml
 
 kotest "--set"  "(root.node1 =@value('value1') && root.node2 =@value( value2 ))" file1.xml
 cat $OUTPATH/file1.xml
-
+#todo fix 
+oktest "--set"  "(root.node1=@value('value1') && .=@attrib(id,2))" file1.xml
+#todo add fix : .. return at parent of node 
+oktest "--set"  "(root.node1 =@value('value1') && ..node2 =@value( value2 ))" file1.xml
+#todo add fix : / return to root min node
+oktest "--set"  "(root.node1=@value('value1') && /root.node2=@value( value2 ))" file1.xml
 
 rm -rf $OUTPATH/file1.xml
 
