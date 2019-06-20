@@ -8,7 +8,7 @@ fi
 
 
 EXEC=""
-ARGS="--verbose 7 --addtest --addxmlinfo --createxslt --debug --out_path "
+ARGS="--verbose 7 --addtest --addxmlinfo --createxslt --debug  --out_path "
 
 
 if [ -e ./Debuglinux64 ]

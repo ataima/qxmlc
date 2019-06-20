@@ -56,6 +56,12 @@ static const char * dbgaid[]=
     "inode_array_childs_with_options"
 };
 
+std::string xmlCppDecoder::namesp_def;
+std::string xmlCppDecoder::namesp_dec;
+
+
+
+
 bool xmlCppDecoder::checkChildsArray(xmlnodeList & childs)
 {
     for ( auto it : childs )
@@ -141,11 +147,11 @@ void  xmlCppDecoder::emitHeaderClassInit(IXmlNode * node, std::stringstream & ou
     out<<"class "<<decoratename <<std::endl;
     out<<"    : public "<<idecoratename<<std::endl;
     if(node->getNodeType()==IXmlNode::xmlNodeType::inode_array_childs)
-        out<<"    , public IClonable"<<std::endl;
+        out<<"    , public CA::IClonable"<<std::endl;
     else if(node->getNodeType()==IXmlNode::xmlNodeType::inode_array_childs_with_options)
-        out<<"    , public IClonableOption"<<std::endl;
+        out<<"    , public CA::IClonableOption"<<std::endl;
     else
-        out<<"    , public IKeyValue"<<std::endl;
+        out<<"    , public CA::IKeyValue"<<std::endl;
     out<<"{"<<std::endl;
     LogInfo("Add Class : %s",decoratename.c_str());
 }
@@ -166,7 +172,7 @@ void  xmlCppDecoder::emitCtorInterfaceInit(IXmlNode * node, std::stringstream & 
 void xmlCppDecoder::emitCtorClass(IXmlNode * node, xmlnodeList & childs,std::stringstream & out)
 {
     out <<"protected:"<< std::endl;
-    out <<"    keyList predef;"<< std::endl;
+    out <<"    CA::keyList predef;"<< std::endl;
     out << std::endl;
     std::string decoratename;
     xmlCppDecoder::getClassName(node,decoratename);
@@ -195,43 +201,43 @@ void xmlCppDecoder::emitSourceCtorClass(IXmlNode * node,xmlnodeList & childs, st
         xmlCppDecoder::getClassDottedName(it,dot);
         if (it->getNodeType() == IXmlNode::xmlNodeType::inode_simple)
         {
-            out << "    predef.push_back(xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"<<
+            out << "    predef.push_back(CA::xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"<<
                 it->getName()<<"));"<<std::endl;
         }
         else if (it->getNodeType() == IXmlNode::xmlNodeType::inode_simple_with_options)
         {
-            out << "    predef.push_back(xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"<<it->getName()<<",&"
+            out << "    predef.push_back(CA::xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"<<it->getName()<<",&"
                 <<it->getName()<<"_option));"<<std::endl;
         }
         else if (it->getNodeType() == IXmlNode::xmlNodeType::inode_childs)
         {
-            out << "    predef.push_back(xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"<<it->getName()<<
+            out << "    predef.push_back(CA::xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"<<it->getName()<<
                 ".node_internal_value,&"<<it->getName()<<"));"<<std::endl;
         }
         else if (it->getNodeType() == IXmlNode::xmlNodeType::inode_childs_with_options)
         {
-            out << "    predef.push_back(xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"<<it->getName()<<
+            out << "    predef.push_back(CA::xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"<<it->getName()<<
                 ".node_internal_value,&"<<it->getName()<<",&"<<it->getName()<<
                 ".node_internal_options"<<"));"<<std::endl;
         }
         else if (it->getNodeType() == IXmlNode::xmlNodeType::inode_array )
         {
-            out << "    predef.push_back(xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"<<
+            out << "    predef.push_back(CA::xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"<<
                 it->getName()<<"));"<<std::endl;
         }
         else if (it->getNodeType() == IXmlNode::xmlNodeType::inode_array_with_options )
         {
-            out << "    predef.push_back(xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"<<
+            out << "    predef.push_back(CA::xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"<<
                 it->getName()<<"));"<<std::endl;
         }
         else if (it->getNodeType() == IXmlNode::xmlNodeType::inode_array_childs)
         {
-            out << "    predef.push_back(xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"
+            out << "    predef.push_back(CA::xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"
                 <<it->getName()<<",&"<<it->getName()<<"_ref_clonable));"<<std::endl;
         }
         else if (it->getNodeType() == IXmlNode::xmlNodeType::inode_array_childs_with_options)
         {
-            out << "    predef.push_back(xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"<<it->getName()<<
+            out << "    predef.push_back(CA::xmlNodeSpec( caKEY_" <<up<<","<<dot<<",&"<<it->getName()<<
                 ",&"<<it->getName()<<"_ref_clonable_option));"<<std::endl;
         }
         it++;
@@ -250,7 +256,7 @@ void xmlCppDecoder::emitSourceCtorClass(IXmlNode * node,xmlnodeList & childs, st
             {
                 if (it->getNodeType() == IXmlNode::xmlNodeType::inode_array_childs)
                 {
-                    out << "    LCFXml::deleteChildsArray(&"<<it->getName()<<");"<<std::endl;
+                    out << "    CA::LCFXml::deleteChildsArray(&"<<it->getName()<<");"<<std::endl;
                 }
             }
             out << "}" << std::endl<< std::endl<< std::endl;
@@ -399,7 +405,7 @@ void  xmlCppDecoder::emitVarChildClass(IXmlNode * parent,xmlnodeList & childs , 
             std::string decoratename;
             out << "/// object for nodes[] : "<<it->getFullName()<<std::endl;
             xmlCppDecoder::getClassName(it, decoratename);
-            out << "   std::vector<IClonable *> " << it->getName() << ";" << std::endl;
+            out << "   std::vector<CA::IClonable *> " << it->getName() << ";" << std::endl;
             out << "   "<<decoratename<<"  "<< it->getName()<<"_ref_clonable;"<< std::endl;
         }
         else if (it->getNodeType() == IXmlNode::xmlNodeType::inode_array_childs_with_options)
@@ -407,7 +413,7 @@ void  xmlCppDecoder::emitVarChildClass(IXmlNode * parent,xmlnodeList & childs , 
             std::string decoratename;
             out << "/// object for nodes[] : "<<it->getFullName()<<std::endl;
             xmlCppDecoder::getClassName(it, decoratename);
-            out << "   std::vector<IClonableOption *> " << it->getName() << ";" << std::endl;
+            out << "   std::vector<CA::IClonableOption *> " << it->getName() << ";" << std::endl;
             out << "   "<<decoratename<<"  "<< it->getName()<<"_ref_clonable_option;"<< std::endl;
         }
     }
@@ -425,14 +431,14 @@ void  xmlCppDecoder::emitGettersClass(IXmlNode * parent,xmlnodeList & childs , s
     out<<"        return mName;"<<std::endl;
     out<<"    }"<<std::endl<<std::endl;
     out<<"/// return list of predefined childs node name"<<std::endl;
-    out<<"    inline keyList *  getICAXml_Predef_List() final"<<std::endl;
+    out<<"    inline CA::keyList *  getICAXml_Predef_List() final"<<std::endl;
     out<<"    {"<<std::endl;
     out<<"        return &predef;"<<std::endl;
     out<<"    }"<<std::endl<<std::endl;
     out<<"/// load from IXmlNode"<<std::endl;
     out<<"    inline void loadFromXml(CA::IXmlNode *node) final"<<std::endl;
     out<<"    {"<<std::endl;
-    out<<"        LCFXml::loadFromXml(node,this);"<<std::endl;
+    out<<"        CA::LCFXml::loadFromXml(node,this);"<<std::endl;
     out<<"    }"<<std::endl;
     out<<"/// human readable to string"<<std::endl;
 
@@ -444,7 +450,7 @@ void  xmlCppDecoder::emitGettersClass(IXmlNode * parent,xmlnodeList & childs , s
         out<<"        std::string parent(\"    \");"<<std::endl;
         out<<"        ss<<\"<\"<<getICAXml_Name_Value();"<<std::endl;
         out<<"        ss<<\">\"<<node_internal_value<<std::endl;"<<std::endl;
-        out<<"        LCFXml::toString(ss,this,parent);"<<std::endl;
+        out<<"        CA::LCFXml::toString(ss,this,parent);"<<std::endl;
         out<<"        ss<<\"</\"<<getICAXml_Name_Value()"<<"<<\">\"<<std::endl;"<<std::endl;
         out<<"    }"<<std::endl;
         out<<"/// entry point from file xml to variable class members"<<std::endl;
@@ -458,7 +464,7 @@ void  xmlCppDecoder::emitGettersClass(IXmlNode * parent,xmlnodeList & childs , s
             std::string decoratename;
             getClassName(parent,decoratename);
             out<<"/// return a clone of Unknow Obj"<<std::endl;
-            out<<"    inline IClonable *clone() final" << std::endl;
+            out<<"    inline CA::IClonable *clone() final" << std::endl;
             out<<"    {" << std::endl;
             out<<"        return new "<<decoratename<<"();" << std::endl;
             out<<"    }" << std::endl;
@@ -478,7 +484,7 @@ void  xmlCppDecoder::emitGettersClass(IXmlNode * parent,xmlnodeList & childs , s
             std::string decoratename;
             getClassName(parent,decoratename);
             out<<"/// return a clone of Unknow Obj"<<std::endl;
-            out<<"    inline IClonable *clone() final" << std::endl;
+            out<<"    inline CA::IClonable *clone() final" << std::endl;
             out<<"    {" << std::endl;
             out<<"        return new "<<decoratename<<"();" << std::endl;
             out<<"    }" << std::endl;
@@ -528,18 +534,8 @@ void xmlCppDecoder::emitAddTestCode(IXmlNode *root,std::stringstream & out)
     std::string decoratename;
     xmlCppDecoder::getClassName(root,decoratename);
     out<<std::endl<<std::endl<<std::endl;
-    if(IOptionArgvManager::checkOption(f_namespace))
-    {
-        std::string ns =IOptionArgvManager::getInstance()->getOption(f_namespace).
-                        getStringValue();
-        out << "int main(int argc," << ns << "const _cbt * argv[]){" << std::endl;
-        out << "  " << ns << decoratename << " xmlDb;" << std::endl;
-    }
-    else
-    {
-        out << "int main(int argc,const CA::_cbt * argv[]){" << std::endl;
-        out << "  " << decoratename << " xmlDb;" << std::endl;
-    }
+    out << "int main(int argc,const CA::_cbt * argv[]){" << std::endl;
+    out << "  " << getNameSpaceDecorate()<<decoratename << " xmlDb;" << std::endl;
     out << "   std::chrono::steady_clock::time_point t_start;" << std::endl;
     out << "   std::chrono::steady_clock::time_point t_stop;" << std::endl;
     out << "   if(argc==2){" << std::endl;
@@ -1204,33 +1200,23 @@ void xmlCppDecoder::createIncludes()
 {
     if (IOptionArgvManager::checkOption(f_namespace) )
     {
-        std::string _namespace=IOptionArgvManager::getInstance()->getOption(f_namespace).
-                               getStringValue();
         std::stringstream ss;
-        ss << "/// declare namespace " << _namespace<< std::endl;
-        ss << "namespace " << _namespace << " {" << std::endl << std::endl << std::endl;
+        ss << "/// declare namespace " << getNameSpace()<< std::endl;
+        ss << "namespace " << getNameSpace() << " {" << std::endl << std::endl << std::endl;
         interface.push_front(ss.str());
         source.push_front(ss.str());
         ss.str("");
-        ss << "}; /// end namespace " << _namespace <<
-           std::endl;
+        ss << "}; /// end namespace " << getNameSpace() <<std::endl;
         header.push_back(ss.str());
         source.push_back(ss.str());
-        ss.str("");
-        ss << "#include \"caminiXml.h\"" << std::endl;
-        ss << "#include <chrono>" << std::endl;
-        ss << "#include <vector>" << std::endl;
-        ss << "#include \"" << single_name << ".h\"" << std::endl << std::endl;
-        source.push_front(ss.str());
     }
-    else
-    {
-        std::stringstream ss;
-        ss << "#include \"caminiXml.h\"" << std::endl;
-        ss << "#include \"calcfxml.h\"" << std::endl;
-        ss << "#include \"" << single_name << ".h\"" << std::endl << std::endl;
-        source.push_front(ss.str());
-    }
+
+    std::stringstream ss;
+    ss << "#include \"caminiXml.h\"" << std::endl;
+    ss << "#include \"calcfxml.h\"" << std::endl;
+    ss << "#include \"" << single_name << ".h\"" << std::endl << std::endl;
+    source.push_front(ss.str());
+
 }
 
 void xmlCppDecoder::createInfoFile( IXmlNode* root )
@@ -1304,6 +1290,18 @@ void xmlCppDecoder::createDebugFile(IXmlNode *node)
     }
 }
 
+
+void xmlCppDecoder::prepareNamespace()
+{
+    if(IOptionArgvManager::checkOption(f_namespace))
+    {
+        namesp_def=IOptionArgvManager::getInstance()->getOption(f_namespace).
+                   getStringValue();
+        if(!namesp_def.empty())
+            namesp_dec=namesp_def+"::";
+    }
+}
+
 bool xmlCppDecoder::compile(std::string filename)
 {
     auto res=false;
@@ -1312,6 +1310,7 @@ bool xmlCppDecoder::compile(std::string filename)
         miniXmlNode root("", "");
         if (root.load(filename))
         {
+            prepareNamespace();
             prepareForXslt();
             createInfoFile(&root);
             root.save(file_xml);

@@ -50,6 +50,8 @@ class xmlCppDecoder
     stringList header;
     stringList source;
     stringList xslt;
+    static std::string namesp_def;
+    static std::string namesp_dec;
 
     void createXmlSource( IXmlNode* root);
     void createSourceFromXml( IXmlNode * node);
@@ -90,7 +92,15 @@ class xmlCppDecoder
     static void getOriginName(IXmlNode *node,std::string & name);
     //static void printFullNode(std::stringstream & ss, IXmlNode *node);
     static bool checkChildsArray(xmlnodeList & childs);
-
+    inline static std::string & getNameSpace()
+    {
+        return namesp_def;
+    }
+    inline static std::string & getNameSpaceDecorate()
+    {
+        return namesp_dec;
+    }
+    static void prepareNamespace();
 public :
     bool compile(std::string filename) final;
 };

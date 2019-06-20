@@ -28,35 +28,22 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include "calcfxml.h"
 #include "model.h"
 
-const CA::_cbt *ICAXml_Root_Node::caKEY_PIPPO = "pippo";
-const CA::_cbt *ICAXml_Root_Node::caKEY_PLUTO = "pluto";
-const CA::_cbt *ICAXml_Root_Node::caKEY_TOPOLINO = "topolino";
-const CA::_cbt *ICAXml_Root_Node::caKEY_ZIOPAPERONE = "ziopaperone";
-const CA::_cbt *ICAXml_Root_Node::mName="node";
-
-
-CAXml_Root_Node::CAXml_Root_Node()
+/// declare namespace TEST
+namespace TEST
 {
-    predef.push_back(xmlNodeSpec( caKEY_PIPPO,"root.node.pippo",&pippo,&pippo_option));
-    predef.push_back(xmlNodeSpec( caKEY_PLUTO,"root.node.pluto",&pluto,&pluto_option));
-    predef.push_back(xmlNodeSpec( caKEY_TOPOLINO,"root.node.topolino",&topolino,&topolino_option));
-    predef.push_back(xmlNodeSpec( caKEY_ZIOPAPERONE,"root.node.ziopaperone",&ziopaperone));
-}
 
 
-const CA::_cbt *ICAXml_Root::caKEY_NODE = "node";
+const CA::_cbt *ICAXml_Root::caKEY_PIPPO = "pippo";
+const CA::_cbt *ICAXml_Root::caKEY_PLUTO = "pluto";
+const CA::_cbt *ICAXml_Root::caKEY_TOPOLINO = "topolino";
 const CA::_cbt *ICAXml_Root::mName="root";
 
 
 CAXml_Root::CAXml_Root()
 {
-    predef.push_back(xmlNodeSpec( caKEY_NODE,"root.node",&node,&node_ref_clonable));
-}
-
-
-CAXml_Root::~CAXml_Root()
-{
-    LCFXml::deleteChildsArray(&node);
+    predef.push_back(CA::xmlNodeSpec( caKEY_PIPPO,"root.pippo",&pippo));
+    predef.push_back(CA::xmlNodeSpec( caKEY_PLUTO,"root.pluto",&pluto));
+    predef.push_back(CA::xmlNodeSpec( caKEY_TOPOLINO,"root.topolino",&topolino));
 }
 
 
@@ -73,12 +60,13 @@ bool CAXml_Root::loadFromXml(std::string filename)
     return res;
 }
 
+}; /// end namespace TEST
 
 
 
 int main(int argc,const CA::_cbt * argv[])
 {
-    CAXml_Root xmlDb;
+    TEST::CAXml_Root xmlDb;
     std::chrono::steady_clock::time_point t_start;
     std::chrono::steady_clock::time_point t_stop;
     if(argc==2)
