@@ -1196,6 +1196,22 @@ void xmlCppDecoder::createLicense()
     xslt.push_front(ss.str());
 }
 
+
+void xmlCppDecoder::createIfdef()
+{
+    std::stringstream ss;
+    std::string hdef=single_name;
+    std::transform(hdef.begin(),hdef.end(),hdef.begin(),::toupper);
+    hdef+="_HEADER";
+    ss<<"#ifndef "<<hdef<<std::endl;
+    ss<<"#define "<<hdef<<std::endl;
+    interface.push_front(ss.str());
+    ss.str("");
+    ss<<"#endif  //"<<hdef<<std::endl;
+    header.push_back(ss.str());
+}
+
+
 void xmlCppDecoder::createIncludes()
 {
     if (IOptionArgvManager::checkOption(f_namespace) )
@@ -1321,6 +1337,7 @@ bool xmlCppDecoder::compile(std::string filename)
             createTest(&root);
             createLicense();
             finalizeForXslt();
+            createIfdef();
             xmlCppDecoder::saveToFile(file_h, interface);
             xmlCppDecoder::appendToFile(file_h, header);
             xmlCppDecoder::saveToFile(file_cpp, source);

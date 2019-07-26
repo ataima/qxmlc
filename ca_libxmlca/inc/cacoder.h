@@ -68,6 +68,7 @@ class xmlCppDecoder
     void createXsltFile(IXmlNode *node);
     void createDebugFile(IXmlNode *node);
     void createLicense();
+    void createIfdef();
     static void promoteChild( IXmlNode * model ,  IXmlNode *other);
     static void promoteChildTo( IXmlNode * model ,  xmlnodeList *other);
     static void prepareChildNodeList( IXmlNode * node , xmlnodeList & childs );
