@@ -782,7 +782,7 @@ void LCFXml::toString(std::iostream &out, IKeyValue *obj, std::string &parent)
 }
 
 void LCFXml::toMap(std::map<std::string , std::string> & outmap,IKeyValue *obj,
-            bool ucase)
+            bool ucase=true)
 {
     outmap.clear();
     keyList *list = obj->getICAXml_Predef_List();
