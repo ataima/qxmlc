@@ -782,18 +782,19 @@ void LCFXml::toString(std::iostream &out, IKeyValue *obj, std::string &parent)
 }
 
 void LCFXml::toMap(std::map<std::string , std::string> & outmap,IKeyValue *obj,
-            bool ucase=true)
+                   bool ucase=true)
 {
     outmap.clear();
     keyList *list = obj->getICAXml_Predef_List();
     for (auto it : *list)
     {
         std::string key=it.name;
-        if(ucase){
-           std::transform(key.begin,key.end,key.begin,::toupper);
+        if(ucase)
+        {
+            std::transform(key.begin(),key.end(),key.begin(),::toupper);
         }
-         std::pair<std::string, std::string > p;
-         p.first=key;
+        std::pair<std::string, std::string > p;
+        p.first=key;
         switch (it.type)
         {
         case CA::IXmlNode::xmlNodeType::inode_simple:
@@ -809,13 +810,13 @@ void LCFXml::toMap(std::map<std::string , std::string> & outmap,IKeyValue *obj,
             p.second=*it.D.F.value;
             break;
         case CA::IXmlNode::xmlNodeType::inode_array:
-        break;
+            break;
         case CA::IXmlNode::xmlNodeType::inode_array_with_options:
-        break;
+            break;
         case CA::IXmlNode::xmlNodeType::inode_array_childs:
-        break;
+            break;
         case CA::IXmlNode::xmlNodeType::inode_array_childs_with_options:
-        break;
+            break;
         default:
         {
             setError(nullptr, "Unknow node type on object", it.name, it.fullname);
