@@ -440,11 +440,17 @@ void  xmlCppDecoder::emitGettersClass(IXmlNode * parent,xmlnodeList & childs , s
     out<<"    {"<<std::endl;
     out<<"        CA::LCFXml::loadFromXml(node,this);"<<std::endl;
     out<<"    }"<<std::endl;
-    out<<"/// human readable to string"<<std::endl;
 
+
+    out<<"/// human readable to map as pair key value"<<std::endl;
+    out<<"    void toMap(std::map<std::string,std::string> & outmap,bool ucase=true)"<<std::endl;
+    out<<"    {"<<std::endl;
+    out<<"        CA::LCFXml::toMap(this,outmap,ucase);"<<std::endl;
+    out<<"    }"<<std::endl;
 
     if(parent->getParent()==nullptr)
     {
+        out<<"/// human readable to string"<<std::endl;
         out<<"    void toString(std::iostream &ss)"<<std::endl;
         out<<"    {"<<std::endl;
         out<<"        std::string parent(\"    \");"<<std::endl;
