@@ -189,9 +189,25 @@ bool LCFXml::checkOptions(CA::IXmlNode::xmlNodeType one, CA::IXmlNode::xmlNodeTy
         {
             return false;
         }
+        else if (two == CA::IXmlNode::xmlNodeType::inode_childs_with_options)
+        {
+            return false;
+        }
+        else if (two == CA::IXmlNode::xmlNodeType::inode_childs)
+        {
+            return false;
+        }
         break;
     case CA::IXmlNode::xmlNodeType::inode_array_childs_with_options:
         if (two == CA::IXmlNode::xmlNodeType::inode_array_childs)
+        {
+            return false;
+        }
+        else if (two == CA::IXmlNode::xmlNodeType::inode_childs_with_options)
+        {
+            return false;
+        }
+        else if (two == CA::IXmlNode::xmlNodeType::inode_childs)
         {
             return false;
         }
