@@ -165,6 +165,7 @@ void  xmlCppDecoder::emitCtorInterfaceInit(IXmlNode * node, std::stringstream & 
     if(node->getParent()==nullptr)
     {
         out<<"    virtual bool loadFromXml(std::string filename)=0;"<<std::endl;
+        out<<"    virtual void toString(std::iostream &ss)=0;"<<std::endl;
     }
 
 }
@@ -451,7 +452,7 @@ void  xmlCppDecoder::emitGettersClass(IXmlNode * parent,xmlnodeList & childs , s
     if(parent->getParent()==nullptr)
     {
         out<<"/// human readable to string"<<std::endl;
-        out<<"    void toString(std::iostream &ss)"<<std::endl;
+        out<<"    void toString(std::iostream &ss) final"<<std::endl;
         out<<"    {"<<std::endl;
         out<<"        std::string parent(\"    \");"<<std::endl;
         out<<"        ss<<\"<\"<<getICAXml_Name_Value();"<<std::endl;
