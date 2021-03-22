@@ -15,11 +15,14 @@ file(GLOB SOURCES "./src/*.cpp")
 file(GLOB HEADERS "./inc/*.h")
 
 
-add_library (xmlca  STATIC ${SOURCES} inc/caqxmlc.h src/caqxmlc.cpp inc/caargopt.h src/caargopt.cpp)
+add_library (xmlca_static   STATIC ${SOURCES} inc/caqxmlc.h src/caqxmlc.cpp inc/caargopt.h src/caargopt.cpp)
 
-install ( TARGETS xmlca DESTINATION ${CMAKE_INSTALL_PREFIX} )
+add_library (xmlca   SHARED ${SOURCES} inc/caqxmlc.h src/caqxmlc.cpp inc/caargopt.h src/caargopt.cpp)
 
-set(CMAKE_CXX_FLAGS "--std=c++14 ${CMAKE_CXX_FLAGS}")
+install ( TARGETS xmlca_static DESTINATION ${CMAKE_INSTALL_PREFIX} )
+install ( TARGETS xmlca  DESTINATION ${CMAKE_INSTALL_PREFIX} )
+
+set(CMAKE_CXX_FLAGS "--std=c++14 -fPIC ${CMAKE_CXX_FLAGS}")
 
 add_custom_command (
     TARGET xmlca

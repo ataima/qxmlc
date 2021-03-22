@@ -23,8 +23,8 @@ install ( TARGETS ca_test_build DESTINATION ${CMAKE_INSTALL_PREFIX} )
 set(CMAKE_CXX_FLAGS "--std=c++14 ${CMAKE_CXX_FLAGS}")
 
 
-target_link_libraries (ca_test_build xmlca )
-target_link_libraries (ca_test_build ca_logger )
+target_link_libraries (ca_test_build xmlca_static )
+target_link_libraries (ca_test_build ca_logger_static )
 target_link_libraries (ca_test_build pthread )
 
 

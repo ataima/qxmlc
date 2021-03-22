@@ -21,8 +21,8 @@ install ( TARGETS ca_private  DESTINATION ${CMAKE_INSTALL_PREFIX} )
 
 set(CMAKE_CXX_FLAGS "--std=c++14 ${CMAKE_CXX_FLAGS}")
 
-target_link_libraries (ca_private xmlca )
-target_link_libraries (ca_private ca_logger )
+target_link_libraries (ca_private xmlca_static )
+target_link_libraries (ca_private ca_logger_static )
 target_link_libraries (ca_private pthread )
 
 

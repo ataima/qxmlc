@@ -53,7 +53,7 @@ bool CAXml_Root::loadFromXml(std::string filename)
     CA::IXmlNode *root=CA::IXmlNode::getNewNode();
     if(root->load(filename))
     {
-        loadFromXml(root);
+        loadFromXmlNode(root);
         res=true;
     }
     delete root;

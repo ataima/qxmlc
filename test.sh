@@ -14,22 +14,22 @@ ARGS="--verbose 7 --addtest --addxmlinfo --createxslt --debug  --out_path "
 if [ -e ./Debuglinux64 ]
 then
     EXEC="./Debuglinux64/ca_qxmlc "
-    LIBS="./Debuglinux64/libca_logger.a  ./Debuglinux64/libxmlca.a"
+    LIBS="./Debuglinux64/libca_logger_static.a  ./Debuglinux64/libxmlca_static.a"
 else
 if [ -e ./Debuglinux32 ]
 then
     EXEC="./Debuglinux32/ca_qxmlc "
-    LIBS="./Debuglinux32/libca_logger.a  ./Debuglinux32/libxmlca.a"
+    LIBS="./Debuglinux32/libca_logger_static.a  ./Debuglinux32/libxmlca_static.a"
 else
 if [ -e ./Releaselinux64 ]
 then
     EXEC="./Releaselinux64/ca_qxmlc "
-    LIBS="./Releaselinux64/libca_logger.a  ./Releaselinux64/libxmlca.a"
+    LIBS="./Releaselinux64/libca_logger_static.a  ./Releaselinux64/libxmlca_static.a"
 else
 if [ -e ./Releaselinux32 ]
 then
     EXEC="./Releaselinux32/ca_qxmlc "
-    LIBS="./Releaselinux32/libca_logger.a  ./Releaselinux32/libxmlca.a"
+    LIBS="./Releaselinux32/libca_logger_static.a  ./Releaselinux32/libxmlca_static.a"
 else
     echo "no exec file"
     exit 1

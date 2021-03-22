@@ -357,7 +357,7 @@ void LCFXml::loadFromXml(CA::IXmlNode *node, IKeyValue *obj)
                     }
                 }
                 *it.D.C.value = v->getValue();
-                it.D.C.childs->loadFromXml(v);
+                it.D.C.childs->loadFromXmlNode(v);
             }
             else
             {
@@ -400,7 +400,7 @@ void LCFXml::loadFromXml(CA::IXmlNode *node, IKeyValue *obj)
                 }
                 *it.D.F.value = v->getValue();
                 LCFXml::copyOptions(&v->getOptions(), it.D.F.options);
-                it.D.F.childs->loadFromXml(v);
+                it.D.F.childs->loadFromXmlNode(v);
             }
             else
             {
@@ -563,7 +563,7 @@ void LCFXml::loadFromXml(CA::IXmlNode *node, IKeyValue *obj)
                             }
                         }
                         IClonable *clone = _base->clone();
-                        clone->loadFromXml(v);
+                        clone->loadFromXmlNode(v);
                         clone->setInternalValue(v->getValue());
                         n2out->push_back(clone);
                     }
@@ -623,7 +623,7 @@ void LCFXml::loadFromXml(CA::IXmlNode *node, IKeyValue *obj)
                             }
                         }
                         auto *clone = dynamic_cast<IClonableOption *>(_base->clone());
-                        clone->loadFromXml(v);
+                        clone->loadFromXmlNode(v);
                         clone->setInternalValue(v->getValue());
                         clone->setOptionList(v->getOptions());
                         n3out->push_back(clone);

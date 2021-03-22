@@ -78,7 +78,7 @@ public:
     }
 
 /// load from IXmlNode
-    inline void loadFromXml(CA::IXmlNode *node) final
+    inline void loadFromXmlNode(CA::IXmlNode *node) final
     {
         CA::LCFXml::loadFromXml(node,this);
     }

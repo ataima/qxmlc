@@ -239,7 +239,7 @@ public:
 
     virtual keyList *getICAXml_Predef_List() = 0;
 
-    virtual void loadFromXml(CA::IXmlNode *node) = 0;
+    virtual void loadFromXmlNode(CA::IXmlNode *node) = 0;
 
     virtual ~IKeyValue() = default;
 };

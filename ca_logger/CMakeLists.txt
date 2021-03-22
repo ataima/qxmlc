@@ -14,11 +14,14 @@ include_directories(./inc)
 file(GLOB SOURCES "./src/*.cpp")
 
 
-add_library (ca_logger STATIC ${SOURCES} )
+add_library (ca_logger_static STATIC ${SOURCES} )
+add_library (ca_logger SHARED ${SOURCES} )
 
+
+install ( TARGETS ca_logger_static DESTINATION ${CMAKE_INSTALL_PREFIX} )
 install ( TARGETS ca_logger DESTINATION ${CMAKE_INSTALL_PREFIX} )
 
-set(CMAKE_CXX_FLAGS "--std=c++14 ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "--std=c++14 -fPIC ${CMAKE_CXX_FLAGS}")
 
 add_custom_command (
     TARGET ca_logger

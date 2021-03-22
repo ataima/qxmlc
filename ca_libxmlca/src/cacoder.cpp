@@ -266,7 +266,7 @@ void xmlCppDecoder::emitSourceCtorClass(IXmlNode * node,xmlnodeList & childs, st
         out << "bool res=false;"<<std::endl;
         out << "CA::IXmlNode *root=CA::IXmlNode::getNewNode();" << std::endl;
         out << "if(root->load(filename)){" << std::endl;
-        out << "    loadFromXml(root);" << std::endl;
+        out << "    loadFromXmlNode(root);" << std::endl;
         out << "    res=true;"<<std::endl;
         out << "   }" << std::endl;
         out << "delete root;" << std::endl;
@@ -437,7 +437,7 @@ void  xmlCppDecoder::emitGettersClass(IXmlNode * parent,xmlnodeList & childs , s
     out<<"        return &predef;"<<std::endl;
     out<<"    }"<<std::endl<<std::endl;
     out<<"/// load from IXmlNode"<<std::endl;
-    out<<"    inline void loadFromXml(CA::IXmlNode *node) final"<<std::endl;
+    out<<"    inline void loadFromXmlNode(CA::IXmlNode *node) final"<<std::endl;
     out<<"    {"<<std::endl;
     out<<"        CA::LCFXml::loadFromXml(node,this);"<<std::endl;
     out<<"    }"<<std::endl;

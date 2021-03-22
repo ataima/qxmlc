@@ -29,6 +29,6 @@ add_custom_command (
     COMMAND  ${CMAKE_CURRENT_SOURCE_DIR}/beauty.sh ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_link_libraries (caxml xmlca )
+target_link_libraries (caxml xmlca_static )
 
 

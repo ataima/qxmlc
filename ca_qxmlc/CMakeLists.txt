@@ -21,8 +21,8 @@ install ( TARGETS ca_qxmlc DESTINATION ${CMAKE_INSTALL_PREFIX} )
 set(CMAKE_CXX_FLAGS "--std=c++14 ${CMAKE_CXX_FLAGS}")
 
 
-target_link_libraries (ca_qxmlc xmlca )
-target_link_libraries (ca_qxmlc ca_logger )
+target_link_libraries (ca_qxmlc xmlca_static )
+target_link_libraries (ca_qxmlc ca_logger_static )
 target_link_libraries (ca_qxmlc pthread )
 
 
