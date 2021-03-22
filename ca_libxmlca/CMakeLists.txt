@@ -15,9 +15,9 @@ file(GLOB SOURCES "./src/*.cpp")
 file(GLOB HEADERS "./inc/*.h")
 
 
-add_library (xmlca_static   STATIC ${SOURCES} inc/caqxmlc.h src/caqxmlc.cpp inc/caargopt.h src/caargopt.cpp)
+add_library (xmlca_static   STATIC ${SOURCES} inc/caqxmlc.h src/caqxmlc.cpp inc/caargopt.h src/caargopt.cpp  )
 
-add_library (xmlca   SHARED ${SOURCES} inc/caqxmlc.h src/caqxmlc.cpp inc/caargopt.h src/caargopt.cpp)
+add_library (xmlca   SHARED ${SOURCES} inc/caqxmlc.h src/caqxmlc.cpp inc/caargopt.h src/caargopt.cpp  )
 
 install ( TARGETS xmlca_static DESTINATION ${CMAKE_INSTALL_PREFIX} )
 install ( TARGETS xmlca  DESTINATION ${CMAKE_INSTALL_PREFIX} )
