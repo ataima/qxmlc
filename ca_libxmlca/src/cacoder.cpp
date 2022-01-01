@@ -126,7 +126,7 @@ void xmlCppDecoder::getClassDottedName(IXmlNode *node, std::string & classname)
     classname="\""+node->getFullName()+"\"";
 }
 
-void  xmlCppDecoder::emitHeaderInterfaceInit(IXmlNode * node , std::stringstream & out)
+void  xmlCppDecoder::emitHeaderInterfaceInit(IXmlNode * node, std::stringstream & out)
 {
 
     std::string decoratename;
@@ -276,7 +276,7 @@ void xmlCppDecoder::emitSourceCtorClass(IXmlNode * node,xmlnodeList & childs, st
 
 }
 
-void  xmlCppDecoder::emitConstKeyNames(xmlnodeList & childs , std::stringstream & out)
+void  xmlCppDecoder::emitConstKeyNames(xmlnodeList & childs, std::stringstream & out)
 {
     out<<"protected:"<<std::endl;
     for ( auto & it : childs )
@@ -289,7 +289,7 @@ void  xmlCppDecoder::emitConstKeyNames(xmlnodeList & childs , std::stringstream 
     out<<std::endl;
 }
 
-void  xmlCppDecoder::emitSourceConstKeyNames(IXmlNode * node,xmlnodeList & childs , std::stringstream & out)
+void  xmlCppDecoder::emitSourceConstKeyNames(IXmlNode * node,xmlnodeList & childs, std::stringstream & out)
 {
     std::string classname;
     if(node==nullptr)return ;
@@ -321,7 +321,7 @@ void  xmlCppDecoder::emitSourceConstKeyNames(IXmlNode * node,xmlnodeList & child
 }
 
 
-void  xmlCppDecoder::emitVarChildClass(IXmlNode * parent,xmlnodeList & childs , std::stringstream & out)
+void  xmlCppDecoder::emitVarChildClass(IXmlNode * parent,xmlnodeList & childs, std::stringstream & out)
 {
     auto node_with_value=false;
     auto node_with_option=false;
@@ -422,7 +422,7 @@ void  xmlCppDecoder::emitVarChildClass(IXmlNode * parent,xmlnodeList & childs , 
 
 
 
-void  xmlCppDecoder::emitGettersClass(IXmlNode * parent,xmlnodeList & childs , std::stringstream & out)
+void  xmlCppDecoder::emitGettersClass(IXmlNode * parent,xmlnodeList & childs, std::stringstream & out)
 {
     out<<"public:"<<std::endl;
     out<<"/// getters"<<std::endl;
@@ -592,7 +592,7 @@ void xmlCppDecoder::printFullNode(std::stringstream & out, IXmlNode *node)
 */
 
 
-void xmlCppDecoder::promoteChild( IXmlNode * model ,  IXmlNode *other)
+void xmlCppDecoder::promoteChild( IXmlNode * model,  IXmlNode *other)
 {
     xmlnodeList childs;
     IXmlNode *ochild;
@@ -722,7 +722,7 @@ void xmlCppDecoder::promoteChild( IXmlNode * model ,  IXmlNode *other)
 }
 
 
-void xmlCppDecoder::promoteChildTo( IXmlNode * model ,  xmlnodeList *other)
+void xmlCppDecoder::promoteChildTo( IXmlNode * model,  xmlnodeList *other)
 {
     xmlnodeList childs;
     // find all child ot template selected: is the node with max childs
@@ -745,7 +745,7 @@ void xmlCppDecoder::promoteChildTo( IXmlNode * model ,  xmlnodeList *other)
     }
 }
 
-void xmlCppDecoder::prepareChildNodeList( IXmlNode * node , xmlnodeList & childs )
+void xmlCppDecoder::prepareChildNodeList( IXmlNode * node, xmlnodeList & childs )
 {
     childs.clear();
     if(node==nullptr)return;
@@ -944,7 +944,7 @@ void xmlCppDecoder::createXslt(IXmlNode *node)
 
 
 
-void xmlCppDecoder::createXsltFromNode( IXmlNode * node , xmlnodeList & childs )
+void xmlCppDecoder::createXsltFromNode( IXmlNode * node, xmlnodeList & childs )
 {
     childs.clear();
     if(node==nullptr)return;

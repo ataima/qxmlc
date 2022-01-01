@@ -99,7 +99,7 @@ typedef std::pair<std::string,IXmlNode *  > pairNode;
 
 typedef std::map<std::string,IXmlNode *  > xmlnodeMap;
 
-typedef std::map<const std::string ,CA::IOptionArgv *> optionMap;
+typedef std::map<const std::string,CA::IOptionArgv *> optionMap;
 typedef std::vector<CA::IOptionArgv *> optionDir;
 
 class IOptionArgvManager

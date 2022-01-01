@@ -119,7 +119,7 @@ static void usage(void)
     exit(1);
 }
 
-int main ( int argc , const char *argv[])
+int main ( int argc, const char *argv[])
 {
     std::string fileout;
     std::list<std::string> allfiles;

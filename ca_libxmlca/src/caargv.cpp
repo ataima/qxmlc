@@ -59,7 +59,7 @@ argvManager::argvManager(size_t reqOptionNum)
 
 argvManager::~argvManager()
 {
-    for( std::pair<const std::string ,CA::IOptionArgv *> & it: options)
+    for( std::pair<const std::string,CA::IOptionArgv *> & it: options)
     {
         delete it.second;
     }

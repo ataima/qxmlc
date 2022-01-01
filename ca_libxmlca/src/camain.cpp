@@ -162,7 +162,7 @@ bool mainAppExecutor::execute()
 void mainAppExecutor::Help(IOptionArgvManager *manager )
 {
     std::cout<<GREEN_LIGHT<<"Available commands :"<<REPLACE<<std::endl;
-    for(const std::pair<const std::string ,CA::IOptionArgv *> & it : manager->getOptionsMap() )
+    for(const std::pair<const std::string,CA::IOptionArgv *> & it : manager->getOptionsMap() )
     {
         std::cout<<it.first<<std::endl;
     }

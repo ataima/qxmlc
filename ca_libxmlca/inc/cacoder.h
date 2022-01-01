@@ -55,7 +55,7 @@ class xmlCppDecoder
 
     void createXmlSource( IXmlNode* root);
     void createSourceFromXml( IXmlNode * node);
-    static void createXsltFromNode( IXmlNode * node , xmlnodeList & childs );
+    static void createXsltFromNode( IXmlNode * node, xmlnodeList & childs );
     void createXslt(IXmlNode *node);
     void startXsltNodeFromXml(IXmlNode * node);
     void stopXsltNodeFromXml(IXmlNode * node);
@@ -69,19 +69,19 @@ class xmlCppDecoder
     void createDebugFile(IXmlNode *node);
     void createLicense();
     void createIfdef();
-    static void promoteChild( IXmlNode * model ,  IXmlNode *other);
-    static void promoteChildTo( IXmlNode * model ,  xmlnodeList *other);
-    static void prepareChildNodeList( IXmlNode * node , xmlnodeList & childs );
+    static void promoteChild( IXmlNode * model,  IXmlNode *other);
+    static void promoteChildTo( IXmlNode * model,  xmlnodeList *other);
+    static void prepareChildNodeList( IXmlNode * node, xmlnodeList & childs );
     static void emitAddTestCode(IXmlNode *root,std::stringstream & out);
     static void emitHeaderInterfaceInit(IXmlNode * node, std::stringstream & out);
     static void emitHeaderClassInit(IXmlNode * node,std::stringstream & out);
     static void emitCtorInterfaceInit(IXmlNode * node, std::stringstream & out);
     static void emitCtorClass(IXmlNode * node, xmlnodeList & childs,std::stringstream & out);
     static void emitSourceCtorClass(IXmlNode * node,xmlnodeList & childs, std::stringstream & out);
-    static void emitConstKeyNames(xmlnodeList & childs , std::stringstream & out);
-    static void emitSourceConstKeyNames(IXmlNode * node,xmlnodeList & childs , std::stringstream & out);
-    static void emitVarChildClass(IXmlNode * node,xmlnodeList & childs , std::stringstream & out);
-    static void emitGettersClass(IXmlNode * node,xmlnodeList & childs , std::stringstream & out);
+    static void emitConstKeyNames(xmlnodeList & childs, std::stringstream & out);
+    static void emitSourceConstKeyNames(IXmlNode * node,xmlnodeList & childs, std::stringstream & out);
+    static void emitVarChildClass(IXmlNode * node,xmlnodeList & childs, std::stringstream & out);
+    static void emitGettersClass(IXmlNode * node,xmlnodeList & childs, std::stringstream & out);
     static void emitHeaderClassClose(std::stringstream & out);
     static void getInterfaceName(IXmlNode *node, std::string & classname);
     static void getClassName(IXmlNode *node, std::string & classname);

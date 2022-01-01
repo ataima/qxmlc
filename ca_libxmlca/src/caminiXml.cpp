@@ -269,7 +269,7 @@ size_t miniXmlNode::getChildsNum(IXmlNode *node)
 
 
 IXmlNode *miniXmlNode::add(IXmlNode *curr,const std::string & _name,
-                           std::string & _value , optionsList &optl)
+                           std::string & _value, optionsList &optl)
 {
     // name as Xpath = A.B.C. es test.suite.doc
     std::string::size_type p = _name.find('.');

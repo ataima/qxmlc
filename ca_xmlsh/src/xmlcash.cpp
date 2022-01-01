@@ -61,7 +61,7 @@ typedef enum tag_optin_av
 static void Help(CA::IOptionArgvManager *manager)
 {
     std::cout<<GREEN_LIGHT<<"Available commands :"<<REPLACE<<std::endl;
-    for(const std::pair<const std::string ,CA::IOptionArgv *> & it : manager->getOptionsMap() )
+    for(const std::pair<const std::string,CA::IOptionArgv *> & it : manager->getOptionsMap() )
     {
         std::cout<<it.first<<std::endl;
     }
@@ -191,7 +191,7 @@ typedef enum tag_token_type
     t_assign,           // =
     t_number,           // number
     t_ident,            // ident
-    t_key_childs ,      // @childs
+    t_key_childs,       // @childs
     t_key_value,        // @value
     t_key_attrib,       // @attrib
 
@@ -1846,7 +1846,7 @@ static int exec ( const std::string & filename)
     return 1;
 }
 
-int main ( int argc , const char *argv[])
+int main ( int argc, const char *argv[])
 {
     std::chrono::steady_clock::time_point t_start;
     std::chrono::steady_clock::time_point t_stop;

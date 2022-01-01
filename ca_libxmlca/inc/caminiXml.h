@@ -312,7 +312,7 @@ protected:
     void clearNode();
     /// add a node with option
     static IXmlNode *add(IXmlNode * node,const std::string & _name,
-                         std::string &_value , optionsList &optl);
+                         std::string &_value, optionsList &optl);
     /// remove node
     bool remove(IXmlNode *curr,const std::string & _name);
     /// link a node to anoter
@@ -341,7 +341,7 @@ protected:
     /// find last next
     static IXmlNode *findLast(IXmlNode *node,const std::string & _name,IXmlNode *end);
     /// fina node with name name
-    static IXmlNode *find(IXmlNode *node , const std::string & _name);
+    static IXmlNode *find(IXmlNode *node, const std::string & _name);
     /// compare option
     static bool  compareOption(optionsList &opt1,optionsList &opt2);
     /// ruturn the child with max childs
@@ -444,7 +444,8 @@ public:
             fullname+=".";
             fullname+=name;
         }
-        else {
+        else
+        {
             fullname = name;
         }
     }

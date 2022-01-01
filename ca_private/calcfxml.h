@@ -281,7 +281,7 @@ public:
 
     static void toString(std::iostream &ss, IKeyValue *obj, std::string &parent);
 
-    static void toMap(std::map<std::string , std::string> & outmap,IKeyValue *obj,
+    static void toMap(std::map<std::string, std::string> & outmap,IKeyValue *obj,
                       bool ucase);
 
     static void deleteChildsArray(std::vector<IClonable *> *objs);

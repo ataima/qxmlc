@@ -221,7 +221,7 @@ void DefaultPrinter::out( int level, std::string & msg)
     };
     if(level<0)level=0;
     if(level>LOG_DEBUG)level=LOG_DEBUG+1;
-    fprintf(stderr ,msg.c_str(),GREEN_LIGHT,YELLOW,GREEN_LIGHT,WHITE,colors[level],REPLACE,"\n");
+    fprintf(stderr,msg.c_str(),GREEN_LIGHT,YELLOW,GREEN_LIGHT,WHITE,colors[level],REPLACE,"\n");
 }
 
 
